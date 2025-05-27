@@ -1,0 +1,24 @@
+.TextContent {
+    grid-column: span 5;
+    grid-row: span 4;
+
+    & > .title-container {
+        grid-column: span 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+
+        & > button {
+            border: unset;
+            background-color: lightblue;
+            cursor: pointer;
+            display: none;
+        }
+
+        &:hover > button {
+            display: block;
+        }
+    }
+}

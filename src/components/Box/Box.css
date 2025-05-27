@@ -1,0 +1,73 @@
+.Box {
+  border-radius: 0.5rem;
+  cursor: pointer;
+  position: relative;
+
+  &.dayOfTheMonth {
+    background-color: rgba(var(--base-red) , 0.2);
+    &:hover {
+      background-color: rgba(var(--base-red) , 0.7);
+    }
+    &[data-selected="true"] {
+      background-color: rgba(var(--base-red) , 1);
+    }
+  }
+  &.dayOfTheWeek {
+    background-color: rgba(var(--base-yellow) , 0.2);
+    &:hover {
+      background-color: rgba(var(--base-yellow) , 0.7);
+    }
+    &[data-selected="true"] {
+      background-color: rgba(var(--base-yellow) , 1);
+    }
+  }
+  &.monthOfTheYear {
+    background-color: rgba(var(--base-blue) , 0.2);
+    &:hover {
+      background-color: rgba(var(--base-blue) , 0.7);
+    }
+    &[data-selected="true"] {
+      background-color: rgba(var(--base-blue) , 1);
+    }
+  }
+
+  &.dayOfTheMonth,
+  &.dayOfTheWeek,
+  &.monthOfTheYear {
+    &[data-selected="true"]::before {
+      content: "";
+      position: absolute;
+      background-color: inherit;
+      opacity: 0.5;
+      z-index: -1;
+    }
+  }
+
+  &.dayOfTheMonth[data-selected="true"]::before {
+    width: 100vw;
+    height: 1.5rem;
+    left: 0;
+  }
+  &.dayOfTheWeek[data-selected="true"] {
+    &::before {
+      height: 100vh;
+      width: 1.5rem;
+      bottom: 0;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: inherit;
+      opacity: 0.5;
+      z-index: -1;
+      width: 100vw;
+      height: 1.5rem;
+      right: 0;
+    }
+  }
+  &.monthOfTheYear[data-selected="true"]::before {
+    height: 100vw;
+    width: 1.5rem;
+    top: 0;
+  }
+}

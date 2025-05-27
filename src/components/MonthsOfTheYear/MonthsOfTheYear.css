@@ -1,0 +1,8 @@
+.MonthsOfTheYear {
+    grid-column: 6 / span 7;
+    grid-row: 2 / span 3;
+
+    & > .column {
+        grid-row: span 3;
+    }
+}

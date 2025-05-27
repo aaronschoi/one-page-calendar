@@ -1,0 +1,35 @@
+:root {
+  --base-red: 208, 0, 0;
+  --base-yellow: 255, 186, 8;
+  --base-blue: 63, 136, 197;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+div, section {
+  display: inherit;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  justify-items: inherit;
+  align-items: inherit;
+  gap: inherit;
+  font-size: 1.5rem;
+}
