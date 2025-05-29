@@ -18,14 +18,23 @@ const OffsetWeek = (props: { offset: number }) => {
   if (props.offset > 0) {
     const newDaysOfTheWeek: string[] = new Array(7).fill("");
     for (let i = 0; i < 7; i++) {
-      newDaysOfTheWeek[i] = daysOfTheWeek.at(((i + props.offset) % 7) - 7) ?? '';
+      newDaysOfTheWeek[i] =
+        daysOfTheWeek.at(((i + props.offset) % 7) - 7) ?? "";
     }
     formattedDaysOfTheWeek = newDaysOfTheWeek;
   } else {
     formattedDaysOfTheWeek = daysOfTheWeek;
   }
 
-  return <For each={formattedDaysOfTheWeek}>{(day) => <Box area="dayOfTheWeek" className={day}>{day}</Box>}</For>;
+  return (
+    <For each={formattedDaysOfTheWeek}>
+      {(day) => (
+        <Box area="dayOfTheWeek" value={day} className={day}>
+          {day}
+        </Box>
+      )}
+    </For>
+  );
 };
 
 export default () => {

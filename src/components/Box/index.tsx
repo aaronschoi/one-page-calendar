@@ -1,24 +1,59 @@
-import { createUniqueId, type ParentProps } from "solid-js";
+import { createSignal, createUniqueId, type ParentProps } from "solid-js";
 import { type BoxStore } from "../../providers/BoxProvider/BoxContext";
 import { useBoxContext } from "../../providers/BoxProvider";
 import "./Box.css";
+import { getClasses } from "../../util/getClasses";
+import { effect } from "solid-js/web";
+import { useYearContext } from "../../providers/YearProvider";
+import { getLastDayOfMonth } from "../../util/getLastDayOfMonth";
 
 interface BoxProps extends ParentProps {
   area: keyof BoxStore;
+  value: string | null;
   className?: string;
 }
 
-export default ({ children, area, className }: BoxProps) => {
-  const [boxStore, { setArea }] = useBoxContext();
+export default ({ children, area, className, value }: BoxProps) => {
+  const [boxStore, { setValue }] = useBoxContext();
+  const [year] = useYearContext();
   const id = createUniqueId();
+  const [disabled, setDisabled] = createSignal(false);
+  const [classes, setClasses] = createSignal(
+    getClasses("Box", area, disabled() && "disabled", className)
+  );
+
+  effect(() => {
+    setClasses(getClasses("Box", area, disabled() && "disabled", className));
+    if (area === "dayOfTheMonth") {
+      const date = value !== null && parseInt(value);
+      const month =
+        boxStore.monthOfTheYear.value !== null &&
+        parseInt(boxStore.monthOfTheYear.value);
+      const isDisabled =
+        typeof date === "number" &&
+        date > 27 &&
+        typeof month === "number" &&
+        date > getLastDayOfMonth(year(), month);
+      setDisabled(isDisabled);
+      if (isDisabled) {
+        setValue(area, null, null);
+      }
+    }
+  });
 
   return (
     <div
-      class={`Box ${area} ${className ?? ""}`}
+      class={classes()}
       onClick={() => {
-        setArea(area, boxStore[area] === id ? null : id);
+        if (!disabled()) {
+          if (id === boxStore[area].location) {
+            setValue(area, null, null);
+          } else {
+            setValue(area, id, value);
+          }
+        }
       }}
-      data-selected={id === boxStore[area]}
+      data-selected={id === boxStore[area].location}
     >
       {children}
     </div>

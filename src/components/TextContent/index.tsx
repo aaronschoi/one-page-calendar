@@ -1,33 +1,43 @@
+import { useYearContext } from "../../providers/YearProvider";
 import "./TextContent.css";
 
-interface TextContentProps {
-  year: number;
-  setYear: (year: number) => void;
-}
-
-export default (props: TextContentProps) => {
+export default () => {
+  const [year, { increment, decrement }] = useYearContext();
   return (
     <section class="TextContent">
       <div class="title-container">
         <button
           class="decrement"
           onClick={() => {
-            if (props.year > 1970) {
-              props.setYear(props.year - 1);
+            if (year() > 1970) {
+              decrement();
             }
           }}
         >
           {"<"}
         </button>
-        <h1>{props.year} Calendar</h1>
+        <h1>{year()} Calendar</h1>
         <button
           class="increment"
           onClick={() => {
-            props.setYear(props.year + 1);
+            increment();
           }}
         >
           {">"}
         </button>
+      </div>
+      <div class="content">
+        <p>
+          Heavily inspired by this{" "}
+          <a
+            href="https://medium.com/starts-with-a-bang/the-one-page-calendar-that-changes-how-you-view-the-year-e10b37af2af6"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            article
+          </a>
+          !
+        </p>
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
 import { For } from "solid-js";
 import "./DayOfTheMonth.css";
 import Box from "../Box";
+import { useBoxContext } from "../../providers/BoxProvider";
+import { useYearContext } from "../../providers/YearProvider";
 
 interface DayProps {
   day: number;
@@ -18,7 +20,14 @@ const Day = (props: DayProps) => {
     <For each={dateArray}>
       {(date) => {
         if (date < 32) {
-          return <Box area="dayOfTheMonth">{date}</Box>;
+          return (
+            <Box
+              area="dayOfTheMonth"
+              value={date.toString()}
+            >
+              {date}
+            </Box>
+          );
         }
       }}
     </For>

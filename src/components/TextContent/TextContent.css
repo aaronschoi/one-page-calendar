@@ -12,13 +12,37 @@
 
         & > button {
             border: unset;
-            background-color: lightblue;
+            background-color: rgba(var(--base-blue), 0.2);
             cursor: pointer;
             display: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            &:hover {
+                background-color: rgba(var(--base-blue), 0.7);
+            }
+            &:active {
+                background-color: rgba(var(--base-blue), 1);
+                color: white;
+            }
         }
 
         &:hover > button {
             display: block;
+        }
+    }
+    & > .content {
+        grid-column: span 5;
+        height: 100%;
+        width: 100%;
+        border-radius: 0.5rem;
+        & > p {
+            grid-column: span 5;
+        }
+        & > ul {
+            grid-column: span 5;
+            list-style-type: none;
+            padding: 0.5rem;
+            margin: 0;
         }
     }
 }
