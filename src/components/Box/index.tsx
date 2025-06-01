@@ -1,5 +1,8 @@
 import { createSignal, createUniqueId, type ParentProps } from "solid-js";
-import { type BoxStore } from "../../providers/BoxProvider/BoxContext";
+import {
+  boxStoreArea,
+  type BoxStore,
+} from "../../providers/BoxProvider/BoxContext";
 import { useBoxContext } from "../../providers/BoxProvider";
 import "./Box.css";
 import { getClasses } from "../../util/getClasses";
@@ -24,7 +27,7 @@ export default ({ children, area, className, value }: BoxProps) => {
 
   effect(() => {
     setClasses(getClasses("Box", area, disabled() && "disabled", className));
-    if (area === "dayOfTheMonth") {
+    if (area === boxStoreArea.dayOfTheMonth) {
       const date = value !== null && parseInt(value);
       const month =
         boxStore.monthOfTheYear.value !== null &&
@@ -36,8 +39,24 @@ export default ({ children, area, className, value }: BoxProps) => {
         date > getLastDayOfMonth(year(), month);
       setDisabled(isDisabled);
       if (isDisabled) {
-        setValue(area, null, null);
+        const checkCurrentValue = boxStore[area].value
+          ? parseInt(boxStore[area].value)
+          : null;
+        if (checkCurrentValue === date) {
+          setValue(area, null, null);
+        }
       }
+    }
+  });
+
+  effect(() => {
+    year()
+    if (
+      area === boxStoreArea.monthOfTheYear &&
+      boxStore.monthOfTheYear.value !== null &&
+      value === boxStore.monthOfTheYear.value
+    ) {
+      setValue(boxStoreArea.monthOfTheYear, id, boxStore.monthOfTheYear.value);
     }
   });
 
