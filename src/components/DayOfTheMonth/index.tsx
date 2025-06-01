@@ -1,8 +1,6 @@
 import { For } from "solid-js";
 import "./DayOfTheMonth.css";
 import Box from "../Box";
-import { useBoxContext } from "../../providers/BoxProvider";
-import { useYearContext } from "../../providers/YearProvider";
 
 interface DayProps {
   day: number;
